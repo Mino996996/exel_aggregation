@@ -17,7 +17,7 @@ module.exports = class Aggregate {
   }
 
   /* 各回答数の結果を降順で返す*/
-  allCounts(): Result[] {
+  allCounts(): (string | number)[][] {
     let result: Result = {key: '', value: 0}
     let results: Result[] = [];
     for (let keyword of this.keywords) {
@@ -30,6 +30,14 @@ module.exports = class Aggregate {
       result = {key: keyword, value: count}
       results.push(result);
     }
-    return results.sort((a, b) => b.value - a.value);
+    const aoa: (string | number)[][] = [];
+    results.sort((a, b) => b.value - a.value).forEach(v => {
+      const resultArray = [];
+      resultArray.push(v.key);
+      resultArray.push(v.value);
+      aoa.push(resultArray);
+    });
+
+    return aoa;
   }
 }
